@@ -8,23 +8,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DemoController {
-    // defining a private field for the dependency
-    private Coach myCoach;
 
-    // Setter Injection
+    private Coach myCoach;
+    private Coach anotherCoach;
+
     @Autowired
-    public DemoController(@Qualifier("baseballCoach") Coach theCoach) {
+    public DemoController(@Qualifier("baseballCoach") Coach theCoach,
+                            @Qualifier("baseballCoach") Coach theAnotherCoach) {
         System.out.println("In Constructor: " +getClass().getSimpleName());
         myCoach = theCoach;
+        anotherCoach = theAnotherCoach;
     }
-
-//    @Autowired
-//    public DemoController(Coach theCoach) {
-//        myCoach = theCoach;
-//    }
 
     @GetMapping("/dailyworkout")
     public String getDailyWorkout() {
         return myCoach.getDailyWorkout();
+    }
+
+    // for checking the scope of the bean
+    // by default the scope is Singleton
+    @GetMapping("/check")
+    public String check() {
+        return "Comparing bean: myCoach == anotherCoach, "+ (myCoach == anotherCoach);
     }
 }
