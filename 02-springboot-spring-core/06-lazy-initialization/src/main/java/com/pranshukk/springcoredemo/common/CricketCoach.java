@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 //@Primary //- using this spring will automatically inject this Coach when we run our app, if we dont specify it using @Qualifier...
 public class CricketCoach implements Coach {
+
+    CricketCoach() {
+        System.out.println("Cricket Coach Constructor");
+    }
     @Override
     public String getDailyWorkout() {
         return "Cricket Coach";
